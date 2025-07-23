@@ -7,14 +7,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100dvh;
 }
 
 .main {
-    width: 90%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 1000px;
+    padding: 16px;
     text-align: center;
-    position: relative; /* ✅ Required to position child absolutely inside */
+    position: relative;
+    min-height: 100%;
+    box-sizing: border-box;
 }
 .result-message {
     position: absolute; /* ✅ Center within .main */
