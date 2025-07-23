@@ -10,37 +10,131 @@
 
 <body>
     <div class="main">
-        <h1 style="color: white; text-align: center;">Click the Color Game</h1>
-        <h4 class="targetColor" style="color: white; text-align: center;">Target Color: <span
-                id="targetColorText">green</span></h4>
-        <p class="score" style="color: white; text-align: center;">Score: 0 | Time Left: 02:00</p>
-
-        <div style="display: flex; flex-wrap: wrap;">
-            <!-- 60 buttons -->
-            <script>
-                for (let i = 0; i < 112; i++) {
-                    document.write(`<button class="divColor" style="width: 50px; height: 50px; margin: 5px;"></button>`);
-                }
-            </script>
+        <h1>🎯 Click the Color Game</h1>
+        <div class="targetColor">
+            Target Color: <span id="targetColorText">green</span>
         </div>
-
-        <!-- Result Message -->
-        <div class="result-message" id="resultMessage"
-            style="display: none; text-align: center; color: white; font-size: 24px; margin-top: 20px;">
+        <div class="score">Score: 0 / 15 | Time Left: 01:00</div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+            <div class="divColor"></div>
+        </div>
+        <div id="resultMessage" class="result-message" style="display: none;">
             <p id="resultText"></p>
-            <button onclick="restartGame()" style="font-size: 18px;">🔁 Restart</button>
+            <button onclick="restartGame()">🔄 Restart</button>
         </div>
     </div>
 
-    <audio id="correctSound" src="correct-6033.mp3"></audio>
-    <audio id="wrongSound" src="wronganswer-37702.mp3"></audio>
-    <audio id="winSound" src="crowd-cheer-ii-6263 (1).mp3"></audio>
-    <audio id="loseSound" src="you-loseheavy-echoed-voice-230555.mp3"></audio>
-    
-
     <script>
         let score = 0;
-        let timeLeft = 60; // seconds
+        let timeLeft = 60;
+        const winScore = 15;
         let colorInterval;
         let timerInterval;
 
@@ -62,6 +156,7 @@
 
         let targetColor = getRandomColorName();
         document.getElementById("targetColorText").textContent = targetColor;
+        document.getElementById("targetColorText").style.backgroundColor = targetColor;
 
         const formatTime = (seconds) => {
             const min = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -72,8 +167,12 @@
         const scoreDisplay = document.querySelector(".score");
         const boxes = document.querySelectorAll(".divColor");
 
+        const updateScoreDisplay = () => {
+            scoreDisplay.textContent = `Score: ${score} / ${winScore} | Time Left: ${formatTime(timeLeft)}`;
+        };
+
         const changeColorCon = () => {
-            clearInterval(colorInterval); // Ensure no duplicate intervals
+            clearInterval(colorInterval);
             colorInterval = setInterval(() => {
                 boxes.forEach(box => {
                     const colorName = getRandomColorName();
@@ -84,16 +183,16 @@
         };
 
         const startTimer = () => {
-            clearInterval(timerInterval); // Prevent overlap
-            scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
+            clearInterval(timerInterval);
+            updateScoreDisplay();
             timerInterval = setInterval(() => {
                 timeLeft--;
-                scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
+                updateScoreDisplay();
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     clearInterval(colorInterval);
-                    if (score >= 3) {
+                    if (score >= winScore) {
                         winSound.play();
                         showResult("🎉 Congratulations! You win!");
                     } else {
@@ -101,7 +200,7 @@
                         showResult("❌ You failed! Try again!");
                     }
                 }
-            }, 1000);
+            }, 800);
         };
 
         boxes.forEach(box => {
@@ -112,7 +211,7 @@
                         score++;
                         correctSound.play();
 
-                        if (score === 3) {
+                        if (score >= winScore) {
                             clearInterval(timerInterval);
                             clearInterval(colorInterval);
                             winSound.play();
@@ -121,8 +220,7 @@
                     } else {
                         wrongSound.play();
                     }
-
-                    scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
+                    updateScoreDisplay();
                 }
             });
         });
@@ -135,37 +233,26 @@
         }
 
         function restartGame() {
-            // Stop any playing sounds
             winSound.pause(); winSound.currentTime = 0;
             failSound.pause(); failSound.currentTime = 0;
             correctSound.pause(); correctSound.currentTime = 0;
             wrongSound.pause(); wrongSound.currentTime = 0;
 
-            // Reset state
             score = 0;
             timeLeft = 60;
-
-            // Pick a new target color and update display
             targetColor = getRandomColorName();
             document.getElementById("targetColorText").textContent = targetColor;
-
-            // Hide result message
+            document.getElementById("targetColorText").style.backgroundColor = targetColor;
             document.getElementById("resultMessage").style.display = "none";
-
-            // Reset score/time display
-            scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
-
-            // Restart intervals
+            updateScoreDisplay();
             changeColorCon();
             startTimer();
         }
 
-        // Start game on page load
+        // Start game
         changeColorCon();
         startTimer();
     </script>
-
-
 </body>
 
 </html>
