@@ -97,3 +97,21 @@ button[onclick="restartGame()"] {
 button[onclick="restartGame()"]:hover {
     background-color: #1769aa;
 }
+#startScreen {
+    margin-top: 20px;
+}
+
+#startButton {
+    padding: 12px 24px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#startButton:hover {
+    background-color: #357a38;
+}
