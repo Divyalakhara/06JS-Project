@@ -2,18 +2,25 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Game Project</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <div class="main">
         <h1>🎯 Click the Color Game</h1>
 
+        <!-- Enter Player Name -->
+        <div id="nameScreen">
+            <input type="text" id="playerNameInput" placeholder="Enter your name" />
+            <button id="saveNameBtn">✅ Save Name</button>
+        </div>
+
         <!-- Let's Play Button -->
-        <div id="startScreen">
+        <div id="startScreen" style="display: none;">
+            <p id="welcomeText">Welcome, <span id="playerNameDisplay"></span>!</p>
             <button id="startButton">🎮 Let's Play</button>
         </div>
 
@@ -22,249 +29,199 @@
             <div class="targetColor">
                 Target Color: <span id="targetColorText">green</span>
             </div>
-            
             <div class="score">Score: 0 / 15 | Time Left: 01:00</div>
+
             <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-                 <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            <div class="divColor"></div>
-            
-            
+                <!-- Color boxes will go here -->
             </div>
 
             <!-- Result Message -->
             <div id="resultMessage" class="result-message" style="display: none;">
                 <p id="resultText"></p>
-                <button onclick="restartGame()">🔄 Restart</button>
+                <div style="margin-top: 10px;">
+                    <button onclick="restartGame()">🔄 Restart</button>
+                    <button onclick="goBackToName()">🔙 Back</button>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <script>
-        let score = 0;
-        let timeLeft = 60;
-        const winScore = 15;
-        let colorInterval;
-        let timerInterval;
 
-        const colorNames = [
-            "red", "blue", "green", "yellow", "purple", "orange",
-            "pink", "brown", "aqua", "lime", "teal", "navy",
-            "maroon", "olive", "silver", "gray", "black", "white"
-        ];
 
-        const correctSound = new Audio("correct-6033.mp3");
-        const wrongSound = new Audio("wronganswer-37702.mp3");
-        const winSound = new Audio("crowd-cheer-ii-6263 (1).mp3");
-        const failSound = new Audio("you-loseheavy-echoed-voice-230555.mp3");
+            <!-- Background Music Audio -->
+            <audio id="backgroundMusic" src="game-gaming-minecraft-background-music-377647.mp3" loop></audio>
 
-        const getRandomColorName = () => {
-            const index = Math.floor(Math.random() * colorNames.length);
-            return colorNames[index];
-        };
+            <script>
+                let score = 0;
+                let timeLeft = 60;
+                const winScore = 15;
+                let colorInterval, timerInterval;
+                let playerName = '';
+                let targetColor = '';
 
-        const formatTime = (seconds) => {
-            const min = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const sec = (seconds % 60).toString().padStart(2, '0');
-            return `${min}:${sec}`;
-        };
+                const correctSound = new Audio("correct-6033.mp3");
+                const wrongSound = new Audio("wronganswer-37702.mp3");
+                const winSound = new Audio("crowd-cheer-ii-6263 (1).mp3");
+                const failSound = new Audio("you-loseheavy-echoed-voice-230555.mp3");
+                const backgroundMusic = document.getElementById("backgroundMusic");
 
-        const scoreDisplay = document.querySelector(".score");
-        const boxes = document.querySelectorAll(".divColor");
+                const boxesContainer = document.querySelector(".main > #gameContainer > div:nth-child(3)");
+                const scoreDisplay = document.querySelector(".score");
+                const colorNames = [
+                    "red", "blue", "green", "yellow", "purple", "orange",
+                    "pink", "brown", "aqua", "lime", "teal", "navy",
+                    "maroon", "olive", "silver", "gray", "black", "white"
+                ];
 
-        const updateScoreDisplay = () => {
-            scoreDisplay.textContent = `Score: ${score} / ${winScore} | Time Left: ${formatTime(timeLeft)}`;
-        };
+                const formatTime = (seconds) => {
+                    const min = Math.floor(seconds / 60).toString().padStart(2, '0');
+                    const sec = (seconds % 60).toString().padStart(2, '0');
+                    return `${min}:${sec}`;
+                };
+                const goBackToName = () => {
+                    [winSound, failSound, correctSound, wrongSound].forEach(s => { s.pause(); s.currentTime = 0 });
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
 
-        const changeColorCon = () => {
-            clearInterval(colorInterval);
-            colorInterval = setInterval(() => {
-                boxes.forEach(box => {
-                    const colorName = getRandomColorName();
-                    box.style.backgroundColor = colorName;
-                    box.setAttribute("data-color", colorName);
-                });
-            }, 1000);
-        };
+                    document.getElementById("gameContainer").style.display = "none";
+                    document.getElementById("resultMessage").style.display = "none";
+                    document.getElementById("startScreen").style.display = "none";
+                    document.getElementById("nameScreen").style.display = "block";
+                    score = 0;
+                    timeLeft = 60;
+                };
 
-        const startTimer = () => {
-            clearInterval(timerInterval);
-            updateScoreDisplay();
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateScoreDisplay();
+                const updateScoreDisplay = () => {
+                    scoreDisplay.textContent = `Score: ${score} / ${winScore} | Time Left: ${formatTime(timeLeft)}`;
+                };
 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
+                const getRandomColorName = () => {
+                    const index = Math.floor(Math.random() * colorNames.length);
+                    return colorNames[index];
+                };
+
+                const changeColorCon = () => {
                     clearInterval(colorInterval);
-                    if (score >= winScore) {
-                        winSound.play();
-                        showResult("🎉 Congratulations! You win!");
-                    } else {
-                        failSound.play();
-                        showResult("❌ You failed! Try again!");
-                    }
-                }
-            }, 800);
-        };
+                    colorInterval = setInterval(() => {
+                        document.querySelectorAll(".divColor").forEach(box => {
+                            const colorName = getRandomColorName();
+                            box.style.backgroundColor = colorName;
+                            box.setAttribute("data-color", colorName);
+                        });
+                    }, 1000);
+                };
 
-        boxes.forEach(box => {
-            box.addEventListener("click", () => {
-                if (timeLeft > 0) {
-                    const clickedColor = box.getAttribute("data-color");
-                    if (clickedColor === targetColor) {
-                        score++;
-                        correctSound.play();
-                        if (score >= winScore) {
+                const startTimer = () => {
+                    clearInterval(timerInterval);
+                    updateScoreDisplay();
+                    timerInterval = setInterval(() => {
+                        timeLeft--;
+                        updateScoreDisplay();
+
+                        if (timeLeft <= 0) {
                             clearInterval(timerInterval);
                             clearInterval(colorInterval);
-                            winSound.play();
-                            showResult("🎉 Congratulations! You win!");
+                            backgroundMusic.pause();
+                            backgroundMusic.currentTime = 0;
+
+                            if (score >= winScore) {
+                                winSound.play();
+                                showResult("🎉 Congratulations!");
+                            } else {
+                                failSound.play();
+                                showResult("❌ You failed!");
+                            }
+                            saveScore();
                         }
-                    } else {
-                        wrongSound.play();
-                    }
+                    }, 800);
+                };
+
+                const showResult = (message) => {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
+                    const personalizedMessage = `${message}<br><span style="font-size: 1.2rem; color: #00ffff; font-weight: bold;">🎮 ${playerName}</span>`;
+                    document.getElementById("resultText").innerHTML = personalizedMessage;
+                    document.getElementById("resultMessage").style.display = "block";
+                };
+
+                const restartGame = () => {
+                    [winSound, failSound, correctSound, wrongSound].forEach(s => { s.pause(); s.currentTime = 0 });
+                    score = 0;
+                    timeLeft = 60;
+                    targetColor = getRandomColorName();
+                    document.getElementById("targetColorText").textContent = targetColor;
+                    document.getElementById("targetColorText").style.backgroundColor = targetColor;
+                    document.getElementById("resultMessage").style.display = "none";
                     updateScoreDisplay();
-                }
-            });
-        });
+                    changeColorCon();
+                    startTimer();
+                    backgroundMusic.currentTime = 0;
+                    backgroundMusic.play();
+                };
 
-        function showResult(message) {
-            const resultBox = document.getElementById("resultMessage");
-            const resultText = document.getElementById("resultText");
-            resultText.innerHTML = message;
-            resultBox.style.display = "block";
-        }
+                const generateBoxes = () => {
+                    boxesContainer.innerHTML = "";
+                    for (let i = 0; i < 104; i++) {
+                        const box = document.createElement("div");
+                        box.classList.add("divColor");
+                        box.addEventListener("click", () => {
+                            if (timeLeft > 0) {
+                                const clickedColor = box.getAttribute("data-color");
+                                if (clickedColor === targetColor) {
+                                    score++;
+                                    correctSound.play();
+                                    updateScoreDisplay();
 
-        function restartGame() {
-            winSound.pause(); winSound.currentTime = 0;
-            failSound.pause(); failSound.currentTime = 0;
-            correctSound.pause(); correctSound.currentTime = 0;
-            wrongSound.pause(); wrongSound.currentTime = 0;
+                                    if (score >= winScore) {
+                                        clearInterval(timerInterval);
+                                        clearInterval(colorInterval);
+                                        backgroundMusic.pause();
+                                        backgroundMusic.currentTime = 0;
+                                        winSound.play();
+                                        showResult("🎉 Congratulations!");
+                                        saveScore();  // Now saves the correct score
+                                    }
+                                } else {
+                                    wrongSound.play();
+                                }
 
-            score = 0;
-            timeLeft = 60;
-            targetColor = getRandomColorName();
-            document.getElementById("targetColorText").textContent = targetColor;
-            document.getElementById("targetColorText").style.backgroundColor = targetColor;
-            document.getElementById("resultMessage").style.display = "none";
-            updateScoreDisplay();
-            changeColorCon();
-            startTimer();
-        }
+                                updateScoreDisplay();
+                            }
+                        });
+                        boxesContainer.appendChild(box);
+                    }
+                };
 
-        // Let's Play button click event
-        document.getElementById("startButton").addEventListener("click", () => {
-            document.getElementById("startScreen").style.display = "none";
-            document.getElementById("gameContainer").style.display = "block";
-            targetColor = getRandomColorName();
-            document.getElementById("targetColorText").textContent = targetColor;
-            document.getElementById("targetColorText").style.backgroundColor = targetColor;
-            changeColorCon();
-            startTimer();
-        });
-    </script>
+                const saveScore = () => {
+                    const tbody = document.querySelector("#playerTable tbody");
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${playerName}</td><td>${score}</td>`;
+                    tbody.appendChild(row);
+                };
+
+                // Save name and show Let's Play
+                document.getElementById("saveNameBtn").addEventListener("click", () => {
+                    const input = document.getElementById("playerNameInput");
+                    if (input.value.trim()) {
+                        playerName = input.value.trim();
+                        document.getElementById("playerNameDisplay").textContent = playerName;
+                        document.getElementById("nameScreen").style.display = "none";
+                        document.getElementById("startScreen").style.display = "block";
+                    }
+                });
+
+                // Start game
+                document.getElementById("startButton").addEventListener("click", () => {
+                    document.getElementById("startScreen").style.display = "none";
+                    document.getElementById("gameContainer").style.display = "block";
+                    targetColor = getRandomColorName();
+                    document.getElementById("targetColorText").textContent = targetColor;
+                    document.getElementById("targetColorText").style.backgroundColor = targetColor;
+                    generateBoxes();
+                    changeColorCon();
+                    startTimer();
+                    backgroundMusic.currentTime = 0;
+                    backgroundMusic.play();
+                });
+            </script>
 </body>
 
 </html>
