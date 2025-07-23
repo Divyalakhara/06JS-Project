@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main">
+        <h1 style="color: white; text-align: center;">Click the Color Game</h1>
+        <h4 class="targetColor" style="color: white; text-align: center;">Target Color: <span
+                id="targetColorText">green</span></h4>
+        <p class="score" style="color: white; text-align: center;">Score: 0 | Time Left: 02:00</p>
+
+        <div style="display: flex; flex-wrap: wrap;">
+            <!-- 60 buttons -->
+            <script>
+                for (let i = 0; i < 112; i++) {
+                    document.write(`<button class="divColor" style="width: 50px; height: 50px; margin: 5px;"></button>`);
+                }
+            </script>
+        </div>
+
+        <!-- Result Message -->
+        <div class="result-message" id="resultMessage"
+            style="display: none; text-align: center; color: white; font-size: 24px; margin-top: 20px;">
+            <p id="resultText"></p>
+            <button onclick="restartGame()" style="font-size: 18px;">🔁 Restart</button>
+        </div>
+    </div>
+
+    <audio id="correctSound" src="correct-6033.mp3"></audio>
+    <audio id="wrongSound" src="wronganswer-37702.mp3"></audio>
+    <audio id="winSound" src="crowd-cheer-ii-6263 (1).mp3"></audio>
+    <audio id="loseSound" src="you-loseheavy-echoed-voice-230555.mp3"></audio>
+    
+
+    <script>
+        let score = 0;
+        let timeLeft = 60; // seconds
+        let colorInterval;
+        let timerInterval;
+
+        const colorNames = [
+            "red", "blue", "green", "yellow", "purple", "orange",
+            "pink", "brown", "aqua", "lime", "teal", "navy",
+            "maroon", "olive", "silver", "gray", "black", "white"
+        ];
+
+        const correctSound = new Audio("correct-6033.mp3");
+        const wrongSound = new Audio("wronganswer-37702.mp3");
+        const winSound = new Audio("crowd-cheer-ii-6263 (1).mp3");
+        const failSound = new Audio("you-loseheavy-echoed-voice-230555.mp3");
+
+        const getRandomColorName = () => {
+            const index = Math.floor(Math.random() * colorNames.length);
+            return colorNames[index];
+        };
+
+        let targetColor = getRandomColorName();
+        document.getElementById("targetColorText").textContent = targetColor;
+
+        const formatTime = (seconds) => {
+            const min = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const sec = (seconds % 60).toString().padStart(2, '0');
+            return `${min}:${sec}`;
+        };
+
+        const scoreDisplay = document.querySelector(".score");
+        const boxes = document.querySelectorAll(".divColor");
+
+        const changeColorCon = () => {
+            clearInterval(colorInterval); // Ensure no duplicate intervals
+            colorInterval = setInterval(() => {
+                boxes.forEach(box => {
+                    const colorName = getRandomColorName();
+                    box.style.backgroundColor = colorName;
+                    box.setAttribute("data-color", colorName);
+                });
+            }, 1000);
+        };
+
+        const startTimer = () => {
+            clearInterval(timerInterval); // Prevent overlap
+            scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    clearInterval(colorInterval);
+                    if (score >= 3) {
+                        winSound.play();
+                        showResult("🎉 Congratulations! You win!");
+                    } else {
+                        failSound.play();
+                        showResult("❌ You failed! Try again!");
+                    }
+                }
+            }, 1000);
+        };
+
+        boxes.forEach(box => {
+            box.addEventListener("click", () => {
+                if (timeLeft > 0) {
+                    const clickedColor = box.getAttribute("data-color");
+                    if (clickedColor === targetColor) {
+                        score++;
+                        correctSound.play();
+
+                        if (score === 3) {
+                            clearInterval(timerInterval);
+                            clearInterval(colorInterval);
+                            winSound.play();
+                            showResult("🎉 Congratulations! You win!");
+                        }
+                    } else {
+                        wrongSound.play();
+                    }
+
+                    scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
+                }
+            });
+        });
+
+        function showResult(message) {
+            const resultBox = document.getElementById("resultMessage");
+            const resultText = document.getElementById("resultText");
+            resultText.innerHTML = message;
+            resultBox.style.display = "block";
+        }
+
+        function restartGame() {
+            // Stop any playing sounds
+            winSound.pause(); winSound.currentTime = 0;
+            failSound.pause(); failSound.currentTime = 0;
+            correctSound.pause(); correctSound.currentTime = 0;
+            wrongSound.pause(); wrongSound.currentTime = 0;
+
+            // Reset state
+            score = 0;
+            timeLeft = 60;
+
+            // Pick a new target color and update display
+            targetColor = getRandomColorName();
+            document.getElementById("targetColorText").textContent = targetColor;
+
+            // Hide result message
+            document.getElementById("resultMessage").style.display = "none";
+
+            // Reset score/time display
+            scoreDisplay.textContent = `Score: ${score} | Time Left: ${formatTime(timeLeft)}`;
+
+            // Restart intervals
+            changeColorCon();
+            startTimer();
+        }
+
+        // Start game on page load
+        changeColorCon();
+        startTimer();
+    </script>
+
+
+</body>
+
+</html>
